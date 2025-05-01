@@ -1,58 +1,62 @@
 import React, { useState } from "react";
-import TextField from "@mui/material/TextField";
-import "./App.css";
-import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
+import {
+  TextField,
+  MenuItem,
+  FormControl,
+  InputLabel,
+  Select,
+} from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import dayjs from "dayjs";
 
 function App() {
-  // Use useState to store form data
   const [formData, setFormData] = useState({
-    dateOfBirth: "",
+    dateOfBirth: null,
+    gender: "",
   });
 
-  // Handle changes to the input
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
+  const handleGenderChange = (event) => {
+    setFormData((prev) => ({
+      ...prev,
+      gender: event.target.value,
     }));
   };
 
-  const [gender, setGender] = useState("");
-
-  const handleChange1 = (event) => {
-    setGender(event.target.value);
+  const handleDateChange = (newValue) => {
+    setFormData((prev) => ({
+      ...prev,
+      dateOfBirth: newValue,
+    }));
   };
 
   return (
-    <>
-      <div>
-        <TextField
-          fullWidth
-          sx={{ maxWidth: 200 }}
-          type="date"
-          className="addemployee-input"
-          name="dateOfBirth"
+    <div style={{ padding: 20, maxWidth: 300 }}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
           label="Date of Birth"
           value={formData.dateOfBirth}
-          onChange={handleChange}
+          onChange={handleDateChange}
+          renderInput={(params) => <TextField {...params} fullWidth />}
         />
-      </div>
-      <FormControl fullWidth sx={{ maxWidth: 200 }}>
+      </LocalizationProvider>
+
+      <FormControl fullWidth sx={{ mt: 2 }}>
         <InputLabel id="gender-label">Gender</InputLabel>
         <Select
           labelId="gender-label"
           id="gender-select"
-          value={gender}
+          value={formData.gender}
           label="Gender"
-          onChange={handleChange1}
+          onChange={handleGenderChange}
         >
           <MenuItem value="male">Male</MenuItem>
           <MenuItem value="female">Female</MenuItem>
           <MenuItem value="other">Other</MenuItem>
         </Select>
       </FormControl>
-    </>
+    </div>
   );
 }
 
