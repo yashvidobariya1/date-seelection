@@ -1,24 +1,56 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import TextField from "@mui/material/TextField";
+import "./App.css";
+import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 function App() {
+  // Use useState to store form data
+  const [formData, setFormData] = useState({
+    dateOfBirth: "",
+  });
+
+  // Handle changes to the input
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  const [gender, setGender] = useState("");
+
+  const handleChange1 = (event) => {
+    setGender(event.target.value);
+  };
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <>
+      <div>
+        <TextField
+          type="date"
+          className="addemployee-input"
+          name="dateOfBirth"
+          value={formData.dateOfBirth}
+          onChange={handleChange}
+        />
+      </div>
+      <br />
+      <FormControl>
+        <InputLabel id="gender-label">Gender</InputLabel>
+        <Select
+          labelId="gender-label"
+          id="gender-select"
+          value={gender}
+          label="Gender"
+          onChange={handleChange1}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <MenuItem value="male">Male</MenuItem>
+          <MenuItem value="female">Female</MenuItem>
+          <MenuItem value="other">Other</MenuItem>
+        </Select>
+      </FormControl>
+    </>
   );
 }
 
