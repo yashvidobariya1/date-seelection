@@ -33,6 +33,7 @@ function App() {
           type="date"
           className="addemployee-input"
           name="dateOfBirth"
+          label="Date of Birth"
           value={formData.dateOfBirth}
           onChange={handleChange}
         />
