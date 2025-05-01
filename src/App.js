@@ -15,6 +15,7 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import dayjs from "dayjs";
 import Cleave from "cleave.js";
+import Inputmask from "inputmask";
 // import { DayPicker } from "react-day-picker";
 // import "react-day-picker/style.css";
 // import { DatePicker2, Form } from "antd";
@@ -22,6 +23,8 @@ import Cleave from "cleave.js";
 function App() {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const inputRef = useRef(null);
+  const inputRef1 = useRef(null);
+  const inputRef3 = useRef(null);
   const formattedDate = dayjs(selectedDate).format("YYYY-MM-DD");
   const [showCalendar, setShowCalendar] = useState(false);
   const [formData, setFormData] = useState({
@@ -75,6 +78,11 @@ function App() {
     return () => {
       input.removeEventListener("input", handleInput);
     };
+  }, []);
+
+  useEffect(() => {
+    const mask = new Inputmask("99/99/9999");
+    mask.mask(inputRef3.current);
   }, []);
 
   return (
@@ -135,7 +143,19 @@ function App() {
           style={{ backgroundColor: "#fff" }}
         />
         <h1>Cleave js</h1>
-        <input type="text" ref={inputRef} placeholder="dd/mm/yyyy" />
+        <input type="text" ref={inputRef1} placeholder="dd/mm/yyyy" />
+        <h1>inputmask</h1>
+        <input
+          ref={inputRef3}
+          type="text"
+          placeholder="dd/mm/yyyy"
+          className="p-2 border rounded w-60 focus:outline-none focus:border-blue-500 hover:border-blue-500 text-black"
+          style={{
+            backgroundColor: "#fff",
+            fontSize: "16px",
+            letterSpacing: "0.1em",
+          }}
+        />
       </div>
     </>
   );
