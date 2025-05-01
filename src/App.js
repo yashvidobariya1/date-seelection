@@ -28,6 +28,8 @@ function App() {
     <>
       <div>
         <TextField
+          fullWidth
+          sx={{ maxWidth: 200 }}
           type="date"
           className="addemployee-input"
           name="dateOfBirth"
@@ -35,8 +37,7 @@ function App() {
           onChange={handleChange}
         />
       </div>
-      <br />
-      <FormControl>
+      <FormControl fullWidth sx={{ maxWidth: 200 }}>
         <InputLabel id="gender-label">Gender</InputLabel>
         <Select
           labelId="gender-label"
