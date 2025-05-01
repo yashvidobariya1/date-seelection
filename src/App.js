@@ -14,6 +14,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 import dayjs from "dayjs";
+import Cleave from "cleave.js";
 // import { DayPicker } from "react-day-picker";
 // import "react-day-picker/style.css";
 // import { DatePicker2, Form } from "antd";
@@ -44,6 +45,14 @@ function App() {
   const handleInputClick = () => {
     setShowCalendar(!showCalendar);
   };
+
+  useEffect(() => {
+    new Cleave(inputRef.current, {
+      date: true,
+      delimiter: "/",
+      datePattern: ["d", "m", "Y"],
+    });
+  }, []);
 
   useEffect(() => {
     const input = inputRef.current;
@@ -125,6 +134,8 @@ function App() {
           className="p-2 border rounded w-60 placeholder-gray-500 text-black"
           style={{ backgroundColor: "#fff" }}
         />
+        <h1>Cleave js</h1>
+        <input type="text" ref={inputRef} placeholder="dd/mm/yyyy" />
       </div>
     </>
   );
