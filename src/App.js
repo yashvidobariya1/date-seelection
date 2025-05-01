@@ -48,13 +48,11 @@ function App() {
   useEffect(() => {
     const input = inputRef.current;
 
-    // Flatpickr calendar
     flatpickr(input, {
-      dateFormat: "d/m/Y", // dd/mm/yyyy
+      dateFormat: "d/m/Y",
       allowInput: true,
     });
 
-    // Manual typing auto-format
     const handleInput = (e) => {
       let value = e.target.value.replace(/\D/g, "");
       if (value.length >= 2) value = value.slice(0, 2) + "/" + value.slice(2);
@@ -69,6 +67,7 @@ function App() {
       input.removeEventListener("input", handleInput);
     };
   }, []);
+
   return (
     <>
       <h1>antd</h1>
@@ -120,9 +119,11 @@ function App() {
         <input
           ref={inputRef}
           type="text"
+          inputMode="numeric"
           maxLength={10}
           placeholder="dd/mm/yyyy"
-          className="p-2 border rounded w-60"
+          className="p-2 border rounded w-60 placeholder-gray-500 text-black"
+          style={{ backgroundColor: "#fff" }}
         />
       </div>
     </>
