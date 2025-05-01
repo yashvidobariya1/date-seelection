@@ -81,7 +81,7 @@ function App() {
       <div>
         <input
           id="datePicker"
-          type="text"
+          type="date"
           value={selectedDate ? selectedDate.toLocaleDateString() : ""}
           onClick={handleInputClick}
           readOnly // Make the input read-only to avoid manual editing
