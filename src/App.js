@@ -86,7 +86,7 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div style={{ padding: 20, maxWidth: 300 }}>
       <h1>antd</h1>
       {/* <Form>
         <Form.Item label="Date">
@@ -107,7 +107,7 @@ function App() {
       <h1>react-day-picker</h1>
 
       <h1>MUI</h1>
-      <div style={{ padding: 20, maxWidth: 300 }}>
+      <div>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DatePicker
             label="Date of Birth"
@@ -156,8 +156,34 @@ function App() {
             letterSpacing: "0.1em",
           }}
         />
+        <h1>Simple Input</h1>
+        <input
+          type="date"
+          className="addemployee-input"
+          name="dateOfBirth"
+          data-testid="dateofbirth"
+          value={formData.dateOfBirth}
+          onChange={handleDateChange}
+          placeholder="DD/MM/YYYY"
+        />
+
+        <h1>Simple selection</h1>
+        <select
+          className="addemployee-input"
+          name="gender"
+          data-testid="gender-select"
+          value={formData?.gender}
+          onChange={handleGenderChange}
+        >
+          <option value="" disabled>
+            Select Gender
+          </option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+          <option value="other">Other</option>
+        </select>
       </div>
-    </>
+    </div>
   );
 }
 
