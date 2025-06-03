@@ -17,6 +17,7 @@ import dayjs from "dayjs";
 import Cleave from "cleave.js";
 import Inputmask from "inputmask";
 import Searchbar from "./Searchbar";
+import MultipleselectionSearch from "./MultipleselectionSearch";
 // import { DayPicker } from "react-day-picker";
 // import "react-day-picker/style.css";
 // import { DatePicker2, Form } from "antd";
@@ -185,6 +186,7 @@ function App() {
         </select>
       </div>
       <Searchbar />
+      <MultipleselectionSearch />
     </div>
   );
 }

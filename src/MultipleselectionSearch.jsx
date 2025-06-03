@@ -1,7 +1,14 @@
 import React, { useMemo, useState } from "react";
-import { ListSubheader, Select, TextField, MenuItem } from "@mui/material";
+import {
+  ListSubheader,
+  Select,
+  TextField,
+  MenuItem,
+  Checkbox,
+  ListItemText,
+} from "@mui/material";
 
-function Searchbar() {
+function MultipleselectionSearch() {
   const employeeList = [
     { _id: "1", userName: "Demo Employee 1" },
     { _id: "2", userName: "Demo Employee 11" },
@@ -23,7 +30,8 @@ function Searchbar() {
     { _id: "18", userName: "Mobiles" },
   ];
 
-  const [selectedEmployee, setSelectedEmployee] = useState("");
+  // Change selectedEmployee from string to array of strings
+  const [selectedEmployee, setSelectedEmployee] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
   const filteredEmployeeList = useMemo(() => {
@@ -32,27 +40,43 @@ function Searchbar() {
     );
   }, [employeeList, searchTerm]);
 
-  const handleEmployeeChange = (value) => {
-    setSelectedEmployee(value);
-    setSearchTerm("");
+  const handleEmployeeChange = (event) => {
+    const value = event.target.value;
+
+    // Handle "allUsers" selection
+    if (value.includes("allUsers")) {
+      if (selectedEmployee.length === employeeList.length) {
+        // If all selected, unselect all
+        setSelectedEmployee([]);
+      } else {
+        // Select all employees
+        setSelectedEmployee(employeeList.map((emp) => emp._id));
+      }
+    } else {
+      setSelectedEmployee(value);
+    }
   };
 
   return (
-    <div style={{ textAlign: "center" }}>
-      <h1>Employee Select</h1>
+    <div style={{ textAlign: "center", marginBottom: "500px" }}>
+      <h1>Multi Select Employee</h1>
       <Select
+        multiple
         value={selectedEmployee}
-        onChange={(e) => handleEmployeeChange(e.target.value)}
+        onChange={handleEmployeeChange}
         displayEmpty
         renderValue={(selected) => {
-          if (selected === "") {
+          if (selected.length === 0) {
             return <em>Select Employee</em>;
           }
-          if (selected === "allUsers") {
+          if (selected.length === employeeList.length) {
             return "All Employees";
           }
-          const emp = employeeList.find((e) => e._id === selected);
-          return emp ? emp.userName : "Unknown";
+          const names = selected
+            .map((id) => employeeList.find((e) => e._id === id)?.userName)
+            .filter(Boolean)
+            .join(", ");
+          return names;
         }}
         MenuProps={{
           disableAutoFocusItem: true,
@@ -83,12 +107,23 @@ function Searchbar() {
           />
         </ListSubheader>
 
-        <MenuItem value="allUsers">All Employees</MenuItem>
+        {/* Select All option */}
+        <MenuItem value="allUsers" dense>
+          <Checkbox
+            checked={selectedEmployee.length === employeeList.length}
+            indeterminate={
+              selectedEmployee.length > 0 &&
+              selectedEmployee.length < employeeList.length
+            }
+          />
+          <ListItemText primary="All Employees" />
+        </MenuItem>
 
         {filteredEmployeeList.length > 0 ? (
           filteredEmployeeList.map((emp) => (
-            <MenuItem key={emp._id} value={emp._id}>
-              {emp.userName}
+            <MenuItem key={emp._id} value={emp._id} dense>
+              <Checkbox checked={selectedEmployee.includes(emp._id)} />
+              <ListItemText primary={emp.userName} />
             </MenuItem>
           ))
         ) : (
@@ -99,4 +134,4 @@ function Searchbar() {
   );
 }
 
-export default Searchbar;
+export default MultipleselectionSearch;
