@@ -16,6 +16,7 @@ import "flatpickr/dist/flatpickr.min.css";
 import dayjs from "dayjs";
 import Cleave from "cleave.js";
 import Inputmask from "inputmask";
+import Searchbar from "./Searchbar";
 // import { DayPicker } from "react-day-picker";
 // import "react-day-picker/style.css";
 // import { DatePicker2, Form } from "antd";
@@ -86,104 +87,105 @@ function App() {
   }, []);
 
   return (
-    <div style={{ padding: 20, maxWidth: 300 }}>
-      <h1>antd</h1>
-      {/* <Form>
-        <Form.Item label="Date">
-          <DatePicker2 />
-        </Form.Item>
-      </Form> */}
-      <h1>react-datepicker</h1>
-      <div>
-        <input
-          id="datePicker"
-          type="date"
-          value={selectedDate ? selectedDate.toLocaleDateString() : ""}
-          onClick={handleInputClick}
-          readOnly // Make the input read-only to avoid manual editing
-        />
-      </div>
+    // <div style={{ padding: 20, maxWidth: 300 }}>
+    //   <h1>antd</h1>
+    //   {/* <Form>
+    //     <Form.Item label="Date">
+    //       <DatePicker2 />
+    //     </Form.Item>
+    //   </Form> */}
+    //   <h1>react-datepicker</h1>
+    //   <div>
+    //     <input
+    //       id="datePicker"
+    //       type="date"
+    //       value={selectedDate ? selectedDate.toLocaleDateString() : ""}
+    //       onClick={handleInputClick}
+    //       readOnly // Make the input read-only to avoid manual editing
+    //     />
+    //   </div>
 
-      <h1>react-day-picker</h1>
+    //   <h1>react-day-picker</h1>
 
-      <h1>MUI</h1>
-      <div>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker
-            label="Date of Birth"
-            value={formData.dateOfBirth}
-            onChange={handleDateChange}
-            renderInput={(params) => <TextField {...params} fullWidth />}
-          />
-        </LocalizationProvider>
+    //   <h1>MUI</h1>
+    //   <div>
+    //     <LocalizationProvider dateAdapter={AdapterDayjs}>
+    //       <DatePicker
+    //         label="Date of Birth"
+    //         value={formData.dateOfBirth}
+    //         onChange={handleDateChange}
+    //         renderInput={(params) => <TextField {...params} fullWidth />}
+    //       />
+    //     </LocalizationProvider>
 
-        <FormControl fullWidth sx={{ mt: 2 }}>
-          <InputLabel id="gender-label">Gender</InputLabel>
-          <Select
-            labelId="gender-label"
-            id="gender-select"
-            value={formData.gender}
-            label="Gender"
-            onChange={handleGenderChange}
-          >
-            <MenuItem value="male">Male</MenuItem>
-            <MenuItem value="female">Female</MenuItem>
-            <MenuItem value="other">Other</MenuItem>
-          </Select>
-        </FormControl>
+    //     <FormControl fullWidth sx={{ mt: 2 }}>
+    //       <InputLabel id="gender-label">Gender</InputLabel>
+    //       <Select
+    //         labelId="gender-label"
+    //         id="gender-select"
+    //         value={formData.gender}
+    //         label="Gender"
+    //         onChange={handleGenderChange}
+    //       >
+    //         <MenuItem value="male">Male</MenuItem>
+    //         <MenuItem value="female">Female</MenuItem>
+    //         <MenuItem value="other">Other</MenuItem>
+    //       </Select>
+    //     </FormControl>
 
-        <h1>custom input</h1>
-        <input
-          ref={inputRef}
-          type="text"
-          inputMode="numeric"
-          maxLength={10}
-          placeholder="dd/mm/yyyy"
-          className="p-2 border rounded w-60 placeholder-gray-500 text-black"
-          style={{ backgroundColor: "#fff" }}
-        />
-        <h1>Cleave js</h1>
-        <input type="text" ref={inputRef1} placeholder="dd/mm/yyyy" />
-        <h1>inputmask</h1>
-        <input
-          ref={inputRef3}
-          type="text"
-          placeholder="dd/mm/yyyy"
-          className="p-2 border rounded w-60 focus:outline-none focus:border-blue-500 hover:border-blue-500 text-black"
-          style={{
-            backgroundColor: "#fff",
-            fontSize: "16px",
-            letterSpacing: "0.1em",
-          }}
-        />
-        <h1>Simple Input</h1>
-        <input
-          type="date"
-          className="addemployee-input"
-          name="dateOfBirth"
-          data-testid="dateofbirth"
-          value={formData.dateOfBirth}
-          onChange={handleDateChange}
-          placeholder="DD/MM/YYYY"
-        />
+    //     <h1>custom input</h1>
+    //     <input
+    //       ref={inputRef}
+    //       type="text"
+    //       inputMode="numeric"
+    //       maxLength={10}
+    //       placeholder="dd/mm/yyyy"
+    //       className="p-2 border rounded w-60 placeholder-gray-500 text-black"
+    //       style={{ backgroundColor: "#fff" }}
+    //     />
+    //     <h1>Cleave js</h1>
+    //     <input type="text" ref={inputRef1} placeholder="dd/mm/yyyy" />
+    //     <h1>inputmask</h1>
+    //     <input
+    //       ref={inputRef3}
+    //       type="text"
+    //       placeholder="dd/mm/yyyy"
+    //       className="p-2 border rounded w-60 focus:outline-none focus:border-blue-500 hover:border-blue-500 text-black"
+    //       style={{
+    //         backgroundColor: "#fff",
+    //         fontSize: "16px",
+    //         letterSpacing: "0.1em",
+    //       }}
+    //     />
+    //     <h1>Simple Input</h1>
+    //     <input
+    //       type="date"
+    //       className="addemployee-input"
+    //       name="dateOfBirth"
+    //       data-testid="dateofbirth"
+    //       value={formData.dateOfBirth}
+    //       onChange={handleDateChange}
+    //       placeholder="DD/MM/YYYY"
+    //     />
 
-        <h1>Simple selection</h1>
-        <select
-          className="addemployee-input"
-          name="gender"
-          data-testid="gender-select"
-          value={formData?.gender}
-          onChange={handleGenderChange}
-        >
-          <option value="" disabled>
-            Select Gender
-          </option>
-          <option value="male">Male</option>
-          <option value="female">Female</option>
-          <option value="other">Other</option>
-        </select>
-      </div>
-    </div>
+    //     <h1>Simple selection</h1>
+    //     <select
+    //       className="addemployee-input"
+    //       name="gender"
+    //       data-testid="gender-select"
+    //       value={formData?.gender}
+    //       onChange={handleGenderChange}
+    //     >
+    //       <option value="" disabled>
+    //         Select Gender
+    //       </option>
+    //       <option value="male">Male</option>
+    //       <option value="female">Female</option>
+    //       <option value="other">Other</option>
+    //     </select>
+    //   </div>
+    // </div>
+    <Searchbar />
   );
 }
 
