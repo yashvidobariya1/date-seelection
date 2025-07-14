@@ -18,6 +18,7 @@ import Cleave from "cleave.js";
 import Inputmask from "inputmask";
 import Searchbar from "./Searchbar";
 import MultipleselectionSearch from "./MultipleselectionSearch";
+import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
 // import { DayPicker } from "react-day-picker";
 // import "react-day-picker/style.css";
 // import { DatePicker2, Form } from "antd";
@@ -111,14 +112,14 @@ function App() {
       <h1>MUI</h1>
       <div>
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DatePicker
+          <DesktopDatePicker
             label="Date of Birth"
             value={formData.dateOfBirth}
             format="DD/MM/YYYY"
             onChange={(newValue) => handleDateChange(newValue)}
             slotProps={{
               textField: { fullWidth: true },
-              field: { clearable: true },
+              field: { inputFormat: "DD/MM/YYYY", clearable: true },
             }}
           />
         </LocalizationProvider>
