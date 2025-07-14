@@ -114,8 +114,11 @@ function App() {
           <DatePicker
             label="Date of Birth"
             value={formData.dateOfBirth}
-            onChange={handleDateChange}
-            renderInput={(params) => <TextField {...params} fullWidth />}
+            onChange={(newValue) => handleDateChange(newValue)}
+            slotProps={{
+              textField: { fullWidth: true },
+              field: { clearable: true },
+            }}
           />
         </LocalizationProvider>
 
