@@ -114,6 +114,7 @@ function App() {
           <DatePicker
             label="Date of Birth"
             value={formData.dateOfBirth}
+            format="DD/MM/YYYY"
             onChange={(newValue) => handleDateChange(newValue)}
             slotProps={{
               textField: { fullWidth: true },
