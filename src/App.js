@@ -489,34 +489,688 @@
 //   );
 // }
 
-import * as React from "react";
-import { DemoItem } from "@mui/x-date-pickers/internals/demo";
+// import * as React from "react";
+// import { DemoItem } from "@mui/x-date-pickers/internals/demo";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+// import Box from "@mui/material/Box";
+
+// export default function ClearableProp() {
+//   return (
+//     <LocalizationProvider dateAdapter={AdapterDayjs}>
+//       <Box
+//         sx={{
+//           width: "100%",
+//           height: "100%",
+//           display: "flex",
+//           justifyContent: "center",
+//           position: "relative",
+//         }}
+//       >
+//         <DemoItem label="DesktopDatePicker">
+//           <DesktopDatePicker
+//             sx={{ width: 260 }}
+//             slotProps={{
+//               field: { clearable: true },
+//             }}
+//           />
+//         </DemoItem>
+//       </Box>
+//     </LocalizationProvider>
+//   );
+// }
+
+// import * as React from "react";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
+// import Box from "@mui/material/Box";
+// import dayjs from "dayjs";
+
+// export default function DateFilter() {
+//   const [selectedDate, setSelectedDate] = React.useState(null);
+
+//   React.useEffect(() => {
+//     if (
+//       selectedDate &&
+//       dayjs(selectedDate).isValid() &&
+//       dayjs(selectedDate).year() >= 1900
+//     ) {
+//       const formatted = dayjs(selectedDate).format("YYYY-MM-DD");
+//       console.log("api call", formatted);
+//     }
+//   }, [selectedDate]);
+
+//   return (
+//     <LocalizationProvider dateAdapter={AdapterDayjs}>
+//       <Box sx={{ display: "flex", justifyContent: "center" }}>
+//         <DesktopDatePicker
+//           sx={{ width: 260 }}
+//           value={selectedDate}
+//           onChange={(newValue) => setSelectedDate(newValue)}
+//           format="DD-MM-YYYY"
+//           slotProps={{
+//             field: { clearable: true },
+//           }}
+//         />
+//       </Box>
+//     </LocalizationProvider>
+//   );
+// }
+
+// import React, { useState } from "react";
+// import dayjs from "dayjs";
+// import { DatePicker, PickersDay } from "@mui/x-date-pickers";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { styled } from "@mui/material/styles";
+// import Stack from "@mui/material/Stack";
+// import Chip from "@mui/material/Chip";
+
+// const CustomPickersDay = styled(PickersDay, {
+//   shouldForwardProp: (prop) => prop !== "selectedDay",
+// })(({ theme, selectedDay }) => ({
+//   ...(selectedDay && {
+//     backgroundColor: theme.palette.primary.main,
+//     color: theme.palette.common.white,
+//     "&:hover, &:focus": {
+//       backgroundColor: theme.palette.primary.main,
+//     },
+//   }),
+// }));
+
+// export default function MultiDatePicker() {
+//   const [selectedDates, setSelectedDates] = useState([]);
+
+//   const handleDateChange = (newDate) => {
+//     const exists = selectedDates.some((d) => dayjs(d).isSame(newDate, "day"));
+//     if (exists) {
+//       setSelectedDates(
+//         selectedDates.filter((d) => !dayjs(d).isSame(newDate, "day"))
+//       );
+//     } else {
+//       setSelectedDates([...selectedDates, newDate]);
+//     }
+//   };
+
+//   const handleRemoveDate = (dateToRemove) => {
+//     setSelectedDates(
+//       selectedDates.filter((d) => !dayjs(d).isSame(dateToRemove, "day"))
+//     );
+//   };
+
+//   const renderDay = (day, _value, DayComponentProps) => {
+//     const isSelected = selectedDates.some((d) => dayjs(d).isSame(day, "day"));
+//     return <CustomPickersDay {...DayComponentProps} selectedDay={isSelected} />;
+//   };
+
+//   return (
+//     <LocalizationProvider dateAdapter={AdapterDayjs}>
+//       <DatePicker
+//         onChange={handleDateChange}
+//         value={null}
+//         renderDay={renderDay}
+//       />
+
+//       <div style={{ marginTop: "1rem" }}>
+//         <strong>Selected Dates:</strong>
+//         <Stack direction="row" spacing={1} flexWrap="wrap" mt={1}>
+//           {selectedDates.map((date) => (
+//             <Chip
+//               key={dayjs(date).format("YYYY-MM-DD")}
+//               label={dayjs(date).format("DD/MM/YYYY")}
+//               onDelete={() => handleRemoveDate(date)}
+//               color="primary"
+//               sx={{ margin: "4px" }}
+//             />
+//           ))}
+//         </Stack>
+//       </div>
+//     </LocalizationProvider>
+//   );
+// }
+
+// import React, { useState } from "react";
+// import dayjs from "dayjs";
+// import { DesktopDatePicker, PickersDay } from "@mui/x-date-pickers";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { styled } from "@mui/material/styles";
+// import Stack from "@mui/material/Stack";
+// import Chip from "@mui/material/Chip";
+
+// const CustomPickersDay = styled(PickersDay, {
+//   shouldForwardProp: (prop) => prop !== "selectedDay",
+// })(({ theme, selectedDay }) => ({
+//   ...(selectedDay && {
+//     backgroundColor: theme.palette.primary.main,
+//     color: theme.palette.common.white,
+//     "&:hover, &:focus": {
+//       backgroundColor: theme.palette.primary.dark,
+//     },
+//   }),
+// }));
+
+// export default function MultiDatePicker() {
+//   const [selectedDates, setSelectedDates] = useState([]);
+//   const [open, setOpen] = useState(false);
+
+//   const handleDateChange = (newDate) => {
+//     const exists = selectedDates.some((d) => dayjs(d).isSame(newDate, "day"));
+//     if (exists) {
+//       setSelectedDates((prev) =>
+//         prev.filter((d) => !dayjs(d).isSame(newDate, "day"))
+//       );
+//     } else {
+//       setSelectedDates((prev) => [...prev, newDate]);
+//     }
+//   };
+
+//   const handleRemoveDate = (dateToRemove) => {
+//     setSelectedDates((prev) =>
+//       prev.filter((d) => !dayjs(d).isSame(dateToRemove, "day"))
+//     );
+//   };
+
+//   const renderDay = (day, _value, DayComponentProps) => {
+//     const isSelected = selectedDates.some((d) => dayjs(d).isSame(day, "day"));
+//     return <CustomPickersDay {...DayComponentProps} selectedDay={isSelected} />;
+//   };
+
+//   return (
+//     <LocalizationProvider dateAdapter={AdapterDayjs}>
+//       <DesktopDatePicker
+//         value={null}
+//         onChange={handleDateChange}
+//         closeOnSelect={false}
+//         renderDay={renderDay}
+//         open={open}
+//         onClose={() => setOpen(false)}
+//         onOpen={() => setOpen(true)}
+//       />
+
+//       <div style={{ marginTop: "1rem" }}>
+//         <strong>Selected Dates:</strong>
+//         <Stack direction="row" spacing={1} flexWrap="wrap" mt={1}>
+//           {selectedDates.map((date) => (
+//             <Chip
+//               key={dayjs(date).format("YYYY-MM-DD")}
+//               label={dayjs(date).format("DD/MM/YYYY")}
+//               onDelete={() => handleRemoveDate(date)}
+//               color="primary"
+//               sx={{ margin: "4px" }}
+//             />
+//           ))}
+//         </Stack>
+//       </div>
+//     </LocalizationProvider>
+//   );
+// }
+
+// import React, { useState } from "react";
+// import dayjs from "dayjs";
+// import { DesktopDatePicker, PickersDay } from "@mui/x-date-pickers";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { styled } from "@mui/material/styles";
+// import Stack from "@mui/material/Stack";
+// import Chip from "@mui/material/Chip";
+
+// const CustomPickersDay = styled(PickersDay, {
+//   shouldForwardProp: (prop) => prop !== "selectedDay",
+// })(({ theme, selectedDay }) => ({
+//   ...(selectedDay && {
+//     backgroundColor: "pink",
+//     color: theme.palette.common.white,
+//     fontWeight: theme.typography.fontWeightBold,
+//     borderRadius: "50%",
+//     "&:hover, &:focus": {
+//       backgroundColor: theme.palette.primary.dark,
+//     },
+//   }),
+// }));
+
+// export default function MultiDatePicker() {
+//   const [selectedDates, setSelectedDates] = useState([]);
+//   const [open, setOpen] = useState(false);
+
+//   const handleDateChange = (newDate) => {
+//     const exists = selectedDates.some((d) => dayjs(d).isSame(newDate, "day"));
+//     if (exists) {
+//       setSelectedDates((prev) =>
+//         prev.filter((d) => !dayjs(d).isSame(newDate, "day"))
+//       );
+//     } else {
+//       setSelectedDates((prev) => [...prev, newDate]);
+//     }
+//   };
+
+//   const handleRemoveDate = (dateToRemove) => {
+//     setSelectedDates((prev) =>
+//       prev.filter((d) => !dayjs(d).isSame(dateToRemove, "day"))
+//     );
+//   };
+
+//   const renderDay = (day, _value, DayComponentProps) => {
+//     const isSelected = selectedDates.some((d) => dayjs(d).isSame(day, "day"));
+//     return <CustomPickersDay {...DayComponentProps} selectedDay={isSelected} />;
+//   };
+
+//   return (
+//     <LocalizationProvider dateAdapter={AdapterDayjs}>
+//       <DesktopDatePicker
+//         value={null}
+//         onChange={handleDateChange}
+//         closeOnSelect={false}
+//         renderDay={renderDay}
+//         open={open}
+//         onClose={() => setOpen(false)}
+//         onOpen={() => setOpen(true)}
+//         slotProps={{
+//           field: { clearable: true },
+//         }}
+//       />
+
+//       <div style={{ marginTop: "1rem" }}>
+//         <strong>Selected Dates:</strong>
+//         <Stack direction="row" spacing={1} flexWrap="wrap" mt={1}>
+//           {selectedDates.map((date) => (
+//             <Chip
+//               key={dayjs(date).format("YYYY-MM-DD")}
+//               label={dayjs(date).format("DD/MM/YYYY")}
+//               onDelete={() => handleRemoveDate(date)}
+//               color="primary"
+//               sx={{ margin: "4px" }}
+//             />
+//           ))}
+//         </Stack>
+//       </div>
+//     </LocalizationProvider>
+//   );
+// }
+
+// import React, { useState } from "react";
+// import dayjs from "dayjs";
+// import { DesktopDatePicker, PickersDay } from "@mui/x-date-pickers";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { styled } from "@mui/material/styles";
+// import Stack from "@mui/material/Stack";
+// import Chip from "@mui/material/Chip";
+
+// const CustomPickersDay = styled(PickersDay, {
+//   shouldForwardProp: (prop) => prop !== "selectedDay",
+// })(({ theme, selectedDay }) => ({
+//   ...(selectedDay && {
+//     backgroundColor: theme.palette.primary.main,
+//     color: theme.palette.common.white,
+//     fontWeight: theme.typography.fontWeightBold,
+//     borderRadius: "50%",
+//     "&:hover, &:focus": {
+//       backgroundColor: theme.palette.primary.dark,
+//     },
+//   }),
+// }));
+
+// export default function MultiDatePicker() {
+//   const [selectedDates, setSelectedDates] = useState([]);
+//   const [open, setOpen] = useState(false);
+
+//   const handleDateChange = (newDate) => {
+//     const exists = selectedDates.some((d) => dayjs(d).isSame(newDate, "day"));
+//     if (exists) {
+//       setSelectedDates((prev) =>
+//         prev.filter((d) => !dayjs(d).isSame(newDate, "day"))
+//       );
+//     } else {
+//       setSelectedDates((prev) => [...prev, newDate]);
+//     }
+//   };
+
+//   const handleRemoveDate = (dateToRemove) => {
+//     setSelectedDates((prev) =>
+//       prev.filter((d) => !dayjs(d).isSame(dateToRemove, "day"))
+//     );
+//   };
+
+//   const renderDay = (day, _value, DayComponentProps) => {
+//     const isSelected = selectedDates.some((d) => dayjs(d).isSame(day, "day"));
+//     return (
+//       <CustomPickersDay
+//         {...DayComponentProps}
+//         selectedDay={isSelected}
+//         selected={isSelected}
+//       />
+//     );
+//   };
+
+//   return (
+//     <LocalizationProvider dateAdapter={AdapterDayjs}>
+//       <DesktopDatePicker
+//         value={null}
+//         onChange={handleDateChange}
+//         closeOnSelect={false}
+//         renderDay={renderDay}
+//         open={open}
+//         onClose={() => setOpen(false)}
+//         onOpen={() => setOpen(true)}
+//         slotProps={{
+//           field: { clearable: true },
+//         }}
+//       />
+
+//       <div style={{ marginTop: "1rem" }}>
+//         <strong>Selected Dates:</strong>
+//         <Stack direction="row" spacing={1} flexWrap="wrap" mt={1}>
+//           {selectedDates.map((date) => (
+//             <Chip
+//               key={dayjs(date).format("YYYY-MM-DD")}
+//               label={dayjs(date).format("DD/MM/YYYY")}
+//               onDelete={() => handleRemoveDate(date)}
+//               color="primary"
+//               sx={{ margin: "4px" }}
+//             />
+//           ))}
+//         </Stack>
+//       </div>
+//     </LocalizationProvider>
+//   );
+// }
+
+// import React, { useState } from "react";
+// import dayjs from "dayjs";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { DatePicker, PickersDay } from "@mui/x-date-pickers";
+// import { styled } from "@mui/material/styles";
+// import Chip from "@mui/material/Chip";
+// import Stack from "@mui/material/Stack";
+
+// const CustomPickersDay = styled(PickersDay, {
+//   shouldForwardProp: (prop) => prop !== "selectedDay",
+// })(({ theme, selectedDay }) => ({
+//   ...(selectedDay && {
+//     backgroundColor: theme.palette.primary.main,
+//     color: theme.palette.common.white,
+//     fontWeight: theme.typography.fontWeightBold,
+//     borderRadius: "50%",
+//     "&:hover, &:focus": {
+//       backgroundColor: theme.palette.primary.dark,
+//     },
+//   }),
+// }));
+
+// export default function MultiDatePicker() {
+//   const [selectedDates, setSelectedDates] = useState([]);
+
+//   const handleDateChange = (newDate) => {
+//     if (!newDate || !dayjs(newDate).isValid()) return;
+
+//     const exists = selectedDates.some((d) => dayjs(d).isSame(newDate, "day"));
+//     if (exists) {
+//       setSelectedDates((prev) =>
+//         prev.filter((d) => !dayjs(d).isSame(newDate, "day"))
+//       );
+//     } else {
+//       setSelectedDates((prev) => [...prev, newDate]);
+//     }
+//   };
+
+//   const renderDay = (day, _value, DayComponentProps) => {
+//     const isSelected = selectedDates.some((date) =>
+//       dayjs(date).isSame(day, "day")
+//     );
+//     return (
+//       <CustomPickersDay
+//         {...DayComponentProps}
+//         selectedDay={isSelected}
+//         disableMargin
+//       />
+//     );
+//   };
+
+//   const handleRemoveDate = (dateToRemove) => {
+//     setSelectedDates((prev) =>
+//       prev.filter((d) => !dayjs(d).isSame(dateToRemove, "day"))
+//     );
+//   };
+
+//   return (
+//     <div style={{ margin: "20px" }}>
+//       <LocalizationProvider dateAdapter={AdapterDayjs}>
+//         <DatePicker
+//           value={null}
+//           onChange={handleDateChange}
+//           closeOnSelect={false}
+//           renderDay={renderDay}
+//         />
+
+//         <Stack direction="row" spacing={1} mt={2} flexWrap="wrap">
+//           {selectedDates.map((date) => (
+//             <Chip
+//               key={dayjs(date).format("YYYY-MM-DD")}
+//               label={dayjs(date).format("DD/MM/YYYY")}
+//               onDelete={() => handleRemoveDate(date)}
+//               color="primary"
+//             />
+//           ))}
+//         </Stack>
+//       </LocalizationProvider>
+//     </div>
+//   );
+// }
+
+// import React, { useState } from "react";
+// import dayjs from "dayjs";
+// import Badge from "@mui/material/Badge";
+// import Chip from "@mui/material/Chip";
+// import Stack from "@mui/material/Stack";
+// import { DatePicker, PickersDay } from "@mui/x-date-pickers";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+// const Highlight = (props) => {
+//   console.log("props", props);
+
+//   const { day, outsideCurrentMonth, selectedDates, ...other } = props;
+//   const isSelected = selectedDates.some((d) => dayjs(d).isSame(day, "day"));
+
+//   return (
+//     <Badge
+//       key={day.toString()}
+//       overlap="circular"
+//       badgeContent={isSelected ? "-" : undefined}
+//     >
+//       <PickersDay
+//         {...other}
+//         day={day}
+//         outsideCurrentMonth={outsideCurrentMonth}
+//         selected={isSelected}
+//       />
+//     </Badge>
+//   );
+// };
+
+// export default function MultiDatePickerWithEmoji() {
+//   const [lastSelectedDate, setLastSelectedDate] = useState(null);
+//   const [selectedDates, setSelectedDates] = useState([]);
+
+//   const handleDateChange = (newDate) => {
+//     if (!newDate || !dayjs(newDate).isValid()) return;
+
+//     setLastSelectedDate(newDate);
+//     console.log("selecteddate", selectedDates);
+
+//     setSelectedDates((prev) => {
+//       const exists = prev.some((d) => dayjs(d).isSame(dayjs(newDate), "day"));
+//       return exists
+//         ? prev.filter((d) => !dayjs(d).isSame(dayjs(newDate), "day"))
+//         : [...prev, dayjs(newDate)];
+//     });
+//   };
+
+
+//   const renderDay = (day, _value, DayComponentProps) => {
+//     console.log("day", day);
+//     console.log("DayComponentProps", DayComponentProps);
+
+//     return (
+//       <Highlight
+//         {...DayComponentProps}
+//         day={day}
+//         selectedDates={selectedDates}
+//       />
+//     );
+//   };
+
+//   const handleRemoveDate = (dateToRemove) => {
+//     setSelectedDates((prev) =>
+//       prev.filter((d) => !dayjs(d).isSame(dateToRemove, "day"))
+//     );
+//   };
+
+//   return (
+//     <div style={{ margin: "20px" }}>
+//       <LocalizationProvider dateAdapter={AdapterDayjs}>
+//         <DatePicker
+//           value={lastSelectedDate}
+//           onChange={handleDateChange}
+//           closeOnSelect={false}
+//           renderDay={renderDay}
+//           renderInput={({ inputRef, inputProps, InputProps }) => (
+//             <div ref={inputRef} style={{ display: "flex", alignItems: "center" }}>
+//               <input {...inputProps} />
+//               {InputProps?.endAdornment}
+//             </div>
+//           )}
+//         />
+
+//         <Stack direction="row" spacing={1} mt={2} flexWrap="wrap" useFlexGap>
+//           {selectedDates.map((date) => (
+//             <Chip
+//               key={dayjs(date).format("YYYY-MM-DD")}
+//               label={dayjs(date).format("DD/MM/YYYY")}
+//               onDelete={() => handleRemoveDate(date)}
+//               color="primary"
+//               variant="outlined"
+//             />
+//           ))}
+//         </Stack>
+//       </LocalizationProvider>
+//     </div>
+//   );
+// }
+
+// ------------------------- working as expect but show full calender -----------------------------
+import React, { useState } from "react";
+import dayjs from "dayjs";
+import Badge from "@mui/material/Badge";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import { styled } from "@mui/material/styles";
+import { DatePicker, PickersDay } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-import { DesktopDatePicker } from "@mui/x-date-pickers/DesktopDatePicker";
-import Box from "@mui/material/Box";
 
-export default function ClearableProp() {
+const CustomPickersDay = styled(PickersDay)(({ theme }) => ({
+  "&.Mui-selected": {
+    backgroundColor: theme.palette.primary.main,
+    color: theme.palette.common.white,
+    "&:hover": {
+      backgroundColor: theme.palette.primary.dark,
+    },
+  },
+}));
+
+const Highlight = ({ day, selectedDates, ...props }) => {
+  const isSelected = selectedDates.some((d) => dayjs(d).isSame(day, "day"));
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <Box
-        sx={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          position: "relative",
+    <Badge overlap="circular">
+      <CustomPickersDay
+        {...props}
+        day={day}
+        selected={isSelected}
+        onClick={(e) => {
+          e.stopPropagation();
+          props.onToggle(day);
         }}
-      >
-        <DemoItem label="DesktopDatePicker">
-          <DesktopDatePicker
-            sx={{ width: 260 }}
-            slotProps={{
-              field: { clearable: true },
-            }}
+      />
+    </Badge>
+  );
+};
+
+export default function MultiDateCalendar() {
+  const [selectedDates, setSelectedDates] = useState([]);
+  const [open, setOpen] = useState(false);
+
+  const toggleDate = (date) => {
+    const exists = selectedDates.some((d) => dayjs(d).isSame(date, "day"));
+    setSelectedDates((prev) =>
+      exists
+        ? prev.filter((d) => !dayjs(d).isSame(date, "day"))
+        : [...prev, date]
+    );
+  };
+
+  const renderDay = (day, _value, DayComponentProps) => {
+    return (
+      <Highlight
+        {...DayComponentProps}
+        day={day}
+        selectedDates={selectedDates}
+        onToggle={toggleDate}
+      />
+    );
+  };
+
+  const handleRemoveDate = (dateToRemove) => {
+    setSelectedDates((prev) =>
+      prev.filter((d) => !dayjs(d).isSame(dateToRemove, "day"))
+    );
+  };
+
+  return (
+    <div style={{ margin: "20px" }}>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DatePicker
+          disableHighlightToday
+          onChange={(newDate) => {
+            if (
+              newDate &&
+              dayjs(newDate).isValid() &&
+              dayjs(newDate).year().toString().length === 4
+            ) {
+              toggleDate(newDate);
+            }
+          }}
+
+          closeOnSelect={false}
+          open={open}
+          onClose={() => setOpen(false)}
+          onOpen={() => setOpen(true)}
+          showDaysOutsideCurrentMonth
+          slots={{ day: (props) => renderDay(props.day, null, props) }}
+          slotProps={{
+            field: { clearable: true },
+          }}
+        />
+      </LocalizationProvider>
+
+      <Stack direction="row" spacing={1} mt={2} flexWrap="wrap">
+        {[...new Set(selectedDates.map(d => dayjs(d).format("YYYY-MM-DD")))].map((dateStr) => (
+          <Chip
+            key={dateStr}
+            label={dayjs(dateStr).format("DD/MM/YYYY")}
+            onDelete={() => handleRemoveDate(dateStr)}
+            color="primary"
+            variant="outlined"
           />
-        </DemoItem>
-      </Box>
-    </LocalizationProvider>
+        ))}
+
+      </Stack>
+    </div>
   );
 }
+
