@@ -1063,11 +1063,124 @@
 // }
 
 // ------------------------- working as expect but show full calender -----------------------------
+// import React, { useState } from "react";
+// import dayjs from "dayjs";
+// import Badge from "@mui/material/Badge";
+// import Chip from "@mui/material/Chip";
+// import Stack from "@mui/material/Stack";
+// import { styled } from "@mui/material/styles";
+// import { DatePicker, PickersDay } from "@mui/x-date-pickers";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+
+// const CustomPickersDay = styled(PickersDay)(({ theme }) => ({
+//   "&.Mui-selected": {
+//     backgroundColor: theme.palette.primary.main,
+//     color: theme.palette.common.white,
+//     "&:hover": {
+//       backgroundColor: theme.palette.primary.dark,
+//     },
+//   },
+// }));
+
+// const Highlight = ({ day, selectedDates, ...props }) => {
+//   const isSelected = selectedDates.some((d) => dayjs(d).isSame(day, "day"));
+
+//   return (
+//     <Badge overlap="circular">
+//       <CustomPickersDay
+//         {...props}
+//         day={day}
+//         selected={isSelected}
+//         onClick={(e) => {
+//           e.stopPropagation();
+//           props.onToggle(day);
+//         }}
+//       />
+//     </Badge>
+//   );
+// };
+
+// export default function MultiDateCalendar() {
+//   const [selectedDates, setSelectedDates] = useState([]);
+//   const [open, setOpen] = useState(false);
+
+//   const toggleDate = (date) => {
+//     const exists = selectedDates.some((d) => dayjs(d).isSame(date, "day"));
+//     setSelectedDates((prev) =>
+//       exists
+//         ? prev.filter((d) => !dayjs(d).isSame(date, "day"))
+//         : [...prev, date]
+//     );
+//   };
+
+//   const renderDay = (day, _value, DayComponentProps) => {
+//     return (
+//       <Highlight
+//         {...DayComponentProps}
+//         day={day}
+//         selectedDates={selectedDates}
+//         onToggle={toggleDate}
+//       />
+//     );
+//   };
+
+//   const handleRemoveDate = (dateToRemove) => {
+//     setSelectedDates((prev) =>
+//       prev.filter((d) => !dayjs(d).isSame(dateToRemove, "day"))
+//     );
+//   };
+
+//   return (
+//     <div style={{ margin: "20px" }}>
+//       <LocalizationProvider dateAdapter={AdapterDayjs}>
+//         <DatePicker
+//           disableHighlightToday
+//           onChange={(newDate) => {
+//             if (
+//               newDate &&
+//               dayjs(newDate).isValid() &&
+//               dayjs(newDate).year().toString().length === 4
+//             ) {
+//               toggleDate(newDate);
+//             }
+//           }}
+
+//           closeOnSelect={false}
+//           open={open}
+//           onClose={() => setOpen(false)}
+//           onOpen={() => setOpen(true)}
+//           showDaysOutsideCurrentMonth
+//           slots={{ day: (props) => renderDay(props.day, null, props) }}
+//           slotProps={{
+//             field: { clearable: true },
+//           }}
+//         />
+//       </LocalizationProvider>
+
+//       <Stack direction="row" spacing={1} mt={2} flexWrap="wrap">
+//         {[...new Set(selectedDates.map(d => dayjs(d).format("YYYY-MM-DD")))].map((dateStr) => (
+//           <Chip
+//             key={dateStr}
+//             label={dayjs(dateStr).format("DD/MM/YYYY")}
+//             onDelete={() => handleRemoveDate(dateStr)}
+//             color="primary"
+//             variant="outlined"
+//           />
+//         ))}
+
+//       </Stack>
+//     </div>
+//   );
+// }
+
+
 import React, { useState } from "react";
 import dayjs from "dayjs";
 import Badge from "@mui/material/Badge";
 import Chip from "@mui/material/Chip";
 import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
 import { styled } from "@mui/material/styles";
 import { DatePicker, PickersDay } from "@mui/x-date-pickers";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -1085,7 +1198,6 @@ const CustomPickersDay = styled(PickersDay)(({ theme }) => ({
 
 const Highlight = ({ day, selectedDates, ...props }) => {
   const isSelected = selectedDates.some((d) => dayjs(d).isSame(day, "day"));
-
   return (
     <Badge overlap="circular">
       <CustomPickersDay
@@ -1101,17 +1213,43 @@ const Highlight = ({ day, selectedDates, ...props }) => {
   );
 };
 
-export default function MultiDateCalendar() {
+export default function MultiRangeDatePicker() {
   const [selectedDates, setSelectedDates] = useState([]);
   const [open, setOpen] = useState(false);
+  const [rangeMode, setRangeMode] = useState(false);
+  const [rangeStart, setRangeStart] = useState(null);
 
   const toggleDate = (date) => {
-    const exists = selectedDates.some((d) => dayjs(d).isSame(date, "day"));
-    setSelectedDates((prev) =>
-      exists
-        ? prev.filter((d) => !dayjs(d).isSame(date, "day"))
-        : [...prev, date]
-    );
+    if (rangeMode) {
+      if (!rangeStart) {
+        setRangeStart(date);
+      } else {
+        const start = dayjs(rangeStart).isBefore(date) ? dayjs(rangeStart) : dayjs(date);
+        const end = dayjs(rangeStart).isAfter(date) ? dayjs(rangeStart) : dayjs(date);
+
+        const rangeDates = [];
+        let current = start;
+        while (current.isBefore(end) || current.isSame(end)) {
+          rangeDates.push(current.toDate());
+          current = current.add(1, "day");
+        }
+
+        const newDates = [
+          ...selectedDates,
+          ...rangeDates.filter(
+            (rd) =>
+              !selectedDates.some((d) => dayjs(d).isSame(rd, "day"))
+          ),
+        ];
+        setSelectedDates(newDates);
+        setRangeStart(null);
+      }
+    } else {
+      const exists = selectedDates.some((d) => dayjs(d).isSame(date, "day"));
+      setSelectedDates((prev) =>
+        exists ? prev.filter((d) => !dayjs(d).isSame(date, "day")) : [...prev, date]
+      );
+    }
   };
 
   const renderDay = (day, _value, DayComponentProps) => {
@@ -1145,7 +1283,6 @@ export default function MultiDateCalendar() {
               toggleDate(newDate);
             }
           }}
-
           closeOnSelect={false}
           open={open}
           onClose={() => setOpen(false)}
@@ -1158,8 +1295,21 @@ export default function MultiDateCalendar() {
         />
       </LocalizationProvider>
 
+      <Stack direction="row" spacing={2} mt={2} alignItems="center">
+        <Button
+          variant={rangeMode ? "contained" : "outlined"}
+          color="secondary"
+          onClick={() => {
+            setRangeMode(!rangeMode);
+            setRangeStart(null);
+          }}
+        >
+          {rangeMode ? "Range Mode: ON" : "Range Mode: OFF"}
+        </Button>
+      </Stack>
+
       <Stack direction="row" spacing={1} mt={2} flexWrap="wrap">
-        {[...new Set(selectedDates.map(d => dayjs(d).format("YYYY-MM-DD")))].map((dateStr) => (
+        {[...new Set(selectedDates.map((d) => dayjs(d).format("YYYY-MM-DD")))].map((dateStr) => (
           <Chip
             key={dateStr}
             label={dayjs(dateStr).format("DD/MM/YYYY")}
@@ -1168,7 +1318,6 @@ export default function MultiDateCalendar() {
             variant="outlined"
           />
         ))}
-
       </Stack>
     </div>
   );
